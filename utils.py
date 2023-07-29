@@ -144,9 +144,10 @@ def get_account_details(email, password, app_id):
 
 
 def scrape_apple_music(url):
-  con = url.split('/')[-4]
-  albId = url.split('/')[-1].split('?')[0]
-  itunes_endpoint = f"https://itunes.apple.com/lookup?id={albId}&country={con}&lang=en_us"
+  regex = re.compile(r"apple\.com\/(\w\w)\/(?:album)\/.+\/(\d+|pl\..+)")
+  result = regex.search(url)
+  con, Id = result.groups()
+  itunes_endpoint = f"https://itunes.apple.com/lookup?id={Id}&country={con}&lang=en_us"
   print(itunes_endpoint)
   response = requests.get(itunes_endpoint)
   if response.status_code == 200:
