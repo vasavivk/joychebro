@@ -125,8 +125,9 @@ def scrape_apple_music_command(message):
 def animate_apple_music_command(message):
   chat_id = message.chat.id
   url = message.text.split()[-1]  # Extract URL from the command
+  bot.send_message(chat_id, "OK!, wait 30 seconds...")
   ani_art_url = fetch_animated_artwork(url)
-  bot.send_message(chat_id, text=ani_art_url, disable_web_page_preview = False)
+  bot.send_message(message, text=f"🔗 {ani_art_url}", disable_web_page_preview = False)
 
 
 bot.polling()
