@@ -155,8 +155,8 @@ def scrape_apple_music(url):
     artwork_link = artwork_link.replace("100x100bb.jpg", "3000x3000bb-999.jpg")
     print(artwork_link)
     endpoint = 'https://catbox.moe/user/api.php'
-    params = {'reqtype': 'urlupload', 'url': artwork_link}
-    response = requests.post(endpoint, data=params)
+    data = {'reqtype': 'urlupload', 'url': artwork_link}
+    response = requests.post(endpoint, data=data)
     print(response.url)
     return response.text, file_name
 
@@ -172,8 +172,8 @@ def fetch_animated_artwork(aurl):
     if data.get('animatedUrl'):
       # return data['animatedUrl']
       endpoint = 'https://catbox.moe/user/api.php'
-      params = {'reqtype': 'urlupload', 'url': data['animatedUrl']}
-      response = requests.post(endpoint, data=params)
+      data = {'reqtype': 'urlupload', 'url': data['animatedUrl']}
+      response = requests.post(endpoint, data=data)
       print(response.url)
       return response.text
     else:
@@ -199,12 +199,9 @@ def arl_via_email(email, password):
   password = hashlib.md5(password.encode()).hexdigest()
   client_id, client_secret = "447462", "a83bf7f38ad2f137e444727cfc3775cf"
   params = {
-    'app_id':
-    client_id,
-    'login':
-    email,
-    'password':
-    password,
+    'app_id': client_id,
+    'login': email,
+    'password': password,
     'hash':
     hashlib.md5(
       (client_id + email + password + client_secret).encode()).hexdigest(),
