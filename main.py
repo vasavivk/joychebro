@@ -136,4 +136,19 @@ def animate_apple_music_command(message):
     bot.send_message(message, text=f"🔗 {ani_art_url}", disable_web_page_preview = False)
 
 
+@bot.message_handler(commands=['psa'])
+def scrape_try2link(message):
+    chat_id = message.chat.id
+    try:
+        url = message.text.split(' ', 1)[1].strip()
+        if url == '':
+            bot.send_message(chat_id, "Please provide a URL after the /psa command.")
+        else:
+            msg = bot.send_message(chat_id, "Please wait while I scrape the URL...")
+            try2link_scrape(url, chat_id, msg.message_id)
+    except IndexError:
+        bot.send_message(chat_id, "Error, may be invalid URL, Ask @thekvt WTF")
+
+
+
 bot.polling()
