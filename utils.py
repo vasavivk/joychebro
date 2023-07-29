@@ -216,4 +216,3 @@ def arl_via_email(email, password):
     session.get('https://api.deezer.com/platform/generic/track/80085',
                 headers=headers)
     return genarl(session)["results"]
-
