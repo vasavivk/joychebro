@@ -58,7 +58,7 @@ def process_deezer_username(message):
     bot.send_message(chat_id, 'Please enter your Deezer password:')
     bot.register_next_step_handler(message, process_deezer_password, dmail)
 
-def process_deezer_password(dmail, username):
+def process_deezer_password(message, dmail):
     chat_id = message.chat.id
     password = message.text
     arl = arl_via_email(dmail,password)
