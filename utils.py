@@ -216,3 +216,34 @@ def arl_via_email(email, password):
     session.get('https://api.deezer.com/platform/generic/track/80085',
                 headers=headers)
     return genarl(session)["results"]
+
+def try2link_bypass(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    url = url.rstrip('/')  # Remove trailing slash if present
+
+    params = {'d': int(time.time()) + (60 * 4)}
+    r = client.get(url, params=params, headers={'Referer': 'https://newforex.online/'})
+
+    soup = BeautifulSoup(r.text, 'html.parser')
+    inputs = soup.find(id="go-link").find_all('input')
+    data = {input.get('name'): input.get('value') for input in inputs}
+    time.sleep(7)
+
+    headers = {'Host': 'try2link.com', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://try2link.com',
+               'Referer': url}
+
+    bypassed_url = client.post('https://try2link.com/links/go', headers=headers, data=data)
+    return bypassed_url.json()["url"]
+
+
+def try2link_scrape(url, chat_id, message_id):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    headers = {
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/105.0.0.0 Safari/537.36',
+    }
+    res = client.get(url, cookies={}, headers=headers)
+    url = 'https://try2link.com/' + re.findall('try2link\.com\/(.*?) ', res.text)[0]
+    bypassed_url = try2link_bypass(url)
+    bot.send_message(chat_id, f"Bypassed URL:\n {bypassed_url}")
