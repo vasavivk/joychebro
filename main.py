@@ -113,7 +113,7 @@ def qb_handler(message):
 def scrape_apple_music_command(message):
   chat_id = message.chat.id
   url = message.text.split()[-1]  # Extract URL from the command
-  if url = '':
+  if url == '':
      bot.send_message(chat_id, "Send URL along with it")
   else:
     art_url, song_name = scrape_apple_music(url)
@@ -128,7 +128,7 @@ def scrape_apple_music_command(message):
 def animate_apple_music_command(message):
   chat_id = message.chat.id
   url = message.text.split()[-1]  # Extract URL from the command
-  if url = '':
+  if url == '':
      bot.send_message(chat_id, "Send URL along with it")
   else:
     bot.send_message(chat_id, "OK!, wait 30 seconds...")
