@@ -13,7 +13,9 @@ log_channel_id = '-1001951842822'
 
 bot = telebot.TeleBot(API_TOKEN)
 
-
+def send_log_message(message):
+  bot.send_message(chat_id=log_channel_id, text=message)
+  
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
   username = message.from_user.username
