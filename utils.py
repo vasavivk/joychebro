@@ -84,7 +84,7 @@ def get_account_details(email, password, app_id):
     url = f"https://www.qobuz.com/api.json/0.2/user/login?email={email}&password={password}&app_id={app_id}"
     response = requests.get(url, headers={'User-Agent': USER_AGENT})
     res = response.json()
-    if 'status' not in res:
+     if 'status' not in res or 'end_date' and 'credential' in res :
       user = res['user']
       userid = user['id']
       auth_token = res['user_auth_token']
@@ -107,7 +107,7 @@ def get_account_details(email, password, app_id):
 
     response = requests.get(url, headers={'User-Agent': USER_AGENT})
     res = response.json()
-    if 'status' not in res:
+    if 'status' not in res or 'end_date' and 'credential' in res :
       userid = email
       auth_token = password
       country_code = res['country_code']
