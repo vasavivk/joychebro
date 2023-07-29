@@ -26,7 +26,7 @@ def send_helptext(message):
   chat_id = message.chat.id
   help_text = '''Available Commands:
  /deezer <ARL>  - Check Deezer ARL status
- /gen_arl - To Genarate Deezer account's ARL
+ /gen_arl - To Genarate Deezer account\'s ARL
  /qobuz - Fetch Qobuz account/Token details.
  /artwork <Apple Music URL>  - Get album artwork link of that album
  /ani_art <Apple Music URL> - To get animated artwork of the album
@@ -106,7 +106,7 @@ def qb_handler(message):
     f'app_id=<code>{app_id}</code>\napp_secret=<code>979549437fcc4a3faad4867b5cd25dcb</code> \n\n <span class="tg-spoiler"> <strong>Use this if getting error\n {app_secret} </strong></span>',
     parse_mode='HTML')
 
-'''
+
 @bot.message_handler(commands=['artwork'])
 def scrape_apple_music_command(message):
   chat_id = message.chat.id
@@ -126,6 +126,5 @@ def animate_apple_music_command(message):
   ani_art_url = fetch_animated_artwork(url)
   bot.send_message(chat_id, text=ani_art_url, disable_web_page_preview = False)
 
-'''
 
 bot.polling()
