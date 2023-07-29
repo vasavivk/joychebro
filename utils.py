@@ -217,6 +217,3 @@ def arl_via_email(email, password):
                 headers=headers)
     return genarl(session)["results"]
 
-
-def send_log_message(message):
-  bot.send_message(chat_id=log_channel_id, text=message)
