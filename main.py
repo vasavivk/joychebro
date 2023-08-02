@@ -28,10 +28,10 @@ def send_helptext(message):
   chat_id = message.chat.id
   help_text =''' Available Commands:
  /deezer <ARL>  - Check Deezer ARL status
- /gen\_arl - To Genarate Deezer account\'s ARL
+ /gen_\arl - To Genarate Deezer account\'s ARL
  /qobuz - Fetch Qobuz account/Token details.
  /artwork <Apple Music URL>  - Get album artwork link of that album
- /ani\_art <Apple Music URL> - To get animated artwork of the album
+ /ani_\art <Apple Music URL> - To get animated artwork of the album
  
  <b>Bot created by @thekvt</b>'''
   bot.send_message(chat_id, text=help_text, parse_mode='MarkdownV2')
