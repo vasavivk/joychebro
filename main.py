@@ -26,7 +26,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['help'])
 def send_helptext(message):
   chat_id = message.chat.id
-  help_text = <pre>
+  help_text = <code>
   Available Commands:
  /deezer <ARL>  - Check Deezer ARL status
  /gen_arl - To Genarate Deezer account\'s ARL
@@ -35,7 +35,7 @@ def send_helptext(message):
  /ani_art <Apple Music URL> - To get animated artwork of the album
  
  <b>Bot created by @thekvt</b>
-</pre>
+</code>
   bot.send_message(chat_id, text=help_text, parse_mode='HTML')
 
 
