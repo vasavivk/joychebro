@@ -34,7 +34,7 @@ def send_helptext(message):
  /ani\_art <Apple Music URL> - To get animated artwork of the album
  
  *Bot created by @thekvt*'''
-  bot.send_message(chat_id, text=help_text, parse_mode='MARKDOWN')
+  bot.send_message(chat_id, text=help_text, parse_mode='MARKDOWNV2')
 
 
 @bot.message_handler(commands=['deezer'])
