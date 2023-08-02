@@ -26,17 +26,15 @@ def send_welcome(message):
 @bot.message_handler(commands=['help'])
 def send_helptext(message):
   chat_id = message.chat.id
-  help_text = <code>
-  Available Commands:
+  help_text =''' Available Commands:
  /deezer <ARL>  - Check Deezer ARL status
- /gen_arl - To Genarate Deezer account\'s ARL
+ /gen\_arl - To Genarate Deezer account\'s ARL
  /qobuz - Fetch Qobuz account/Token details.
  /artwork <Apple Music URL>  - Get album artwork link of that album
- /ani_art <Apple Music URL> - To get animated artwork of the album
+ /ani\_art <Apple Music URL> - To get animated artwork of the album
  
- <b>Bot created by @thekvt</b>
-</code>
-  bot.send_message(chat_id, text=help_text, parse_mode='HTML')
+ <b>Bot created by @thekvt</b>'''
+  bot.send_message(chat_id, text=help_text, parse_mode='MarkdownV2')
 
 
 @bot.message_handler(commands=['deezer'])
