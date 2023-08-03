@@ -1,1 +1,2 @@
-gpac|https://download.tsi.telecom-paristech.fr/gpac/release/2.2.1/gpac_2.2.1-rev0-gb34e3851-release-2.2_amd64.deb|
+gpac|https://download.tsi.telecom-paristech.fr/gpac/release/2.2.1/gpac_2.2.1-rev0-gb34e3851-release-2.2_amd64.deb|9ca12ff8bc6c3e3936ce3d46ee64d106dba713fb
+libssl1.1|http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb|4625677908129ce12fc15b821d9e70d76eddf02c
