@@ -4,7 +4,7 @@ from datetime import datetime
 import re
 import hashlib
 from random import randint
-
+import cloudscraper
 
 def check_deezer_subscription_status(arl):
   API_URL = 'http://www.deezer.com/ajax/gw-light.php'
