@@ -35,7 +35,7 @@ def send_helptext(message):
 
  <strong>Bot created by @thekvt</strong>'''
 
-  bot.send_message(chat_id, text=help_text, parse_mode='MarkdownV2')
+  bot.send_message(chat_id, text=help_text, parse_mode='HTML')
 
 
 @bot.message_handler(commands=['deezer'])
