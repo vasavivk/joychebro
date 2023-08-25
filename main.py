@@ -19,8 +19,8 @@ def send_log_message(message):
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
   username = message.from_user.username
-  textw = f"YO! @{username}, I am Alive!\n Type /help to know more"
-  bot.reply_to(message, textw)
+  textw = f"YO! @<b>{username}</b>, I am Alive!\n Type /help to know more"
+  bot.reply_to(message, textw,parse_mode='HTML')
 
 
 @bot.message_handler(commands=['help'])
@@ -29,10 +29,7 @@ def send_helptext(message):
   help_text = '''Available Commands:
  <code>/deezer &lt;ARL&gt;</code>  - Check Deezer ARL status
  <code>/gen_arl</code> - To Generate Deezer account's ARL
- <code>/qobuz</code> - Fetch Qobuz account/Token details.
- <code>/artwork &lt;Apple Music URL&gt;</code>  - Get album artwork link of that album
- <code>/ani_art &lt;Apple Music URL&gt;</code> - To get animated artwork of the album
-
+ <code>/qobuz</code> - Fetch Qobuz account/Token details.<br></br>
  <strong>Bot created by @thekvt</strong>'''
 
   bot.send_message(chat_id, text=help_text, parse_mode='HTML')
