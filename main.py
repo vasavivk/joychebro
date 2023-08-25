@@ -29,7 +29,8 @@ def send_helptext(message):
   help_text = '''Available Commands:
  <code>/arl &lt;ARL&gt;</code>  - Check Deezer ARL status
  <code>/deezer</code> - To Generate Deezer account's ARL
- <code>/qobuz</code> - Fetch Qobuz account/Token details.<br></br>
+ <code>/qobuz</code> - Fetch Qobuz account/Token details.
+ 
  <strong>Bot created by @thekvt</strong>'''
 
   bot.send_message(chat_id, text=help_text, parse_mode='HTML')
