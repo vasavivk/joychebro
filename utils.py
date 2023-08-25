@@ -33,7 +33,7 @@ def check_deezer_subscription_status(arl):
         'Could not login! Credentials wrong or nonexistent account!')
     country_co = results['COUNTRY']
     planD = results['OFFER_NAME']
-    expireD = results['USER']['TRY_AND_BUY']['DATE_END']
+    expireD = results['USER']['TRY_AND_BUY']['DATE_END'].split()[0]
     ActiveD = True
     DLD = True
     LosslessD = results['USER']['OPTIONS']['web_sound_quality']['lossless']
