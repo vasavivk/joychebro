@@ -101,7 +101,7 @@ def get_account_details(email, password, app_id):
       country_code = user['country_code']
       credential = user['credential']
       plan_label = credential['parameters']['label'] if credential['parameters'] else None
-      subscription_end_date = user['subscription']['end_date'] if user['subscription']['end_date'] else 'Unknown'
+      subscription_end_date = user['subscription']['end_date'] if user['subscription'] != "null" else 'Unknown'
       active_subscription = check_account_activity(res)
       store_features = user['store_features']
       streaming_enabled = store_features['streaming']
@@ -122,7 +122,7 @@ def get_account_details(email, password, app_id):
       credential = res['credential']
       plan_label = credential['parameters']['label'] if credential[
         'parameters'] else "Unknown"
-      subscription_end_date = res['subscription']['end_date'] if res['subscription']['end_date'] else 'Unknown'
+      subscription_end_date = res['subscription']['end_date'] if res['subscription'] != 'null' else 'Unknown'
       active_subscription = check_account_activity(res)
       store_features = res['store_features']
       streaming_enabled = store_features['streaming']
