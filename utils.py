@@ -57,8 +57,19 @@ def check_deezer_subscription_status(arl):
     return "Invalid Given ARL or nonexistent account!"
 
 def check_account_activity(res):
-    subs = res["user"]["subscription"]
+    subs = res["user"]["subscription"] 
     cred_params = res["user"]["credential"]["parameters"]
+
+    if subs and datetime.now().date() <= (datetime.strptime(subs["end_date"], "%Y-%m-%d") + timedelta(days=5)).date():
+        return True
+    elif cred_params and cred_params["hires_streaming"] and cred_params["source"] == "household":
+        return True
+    
+    return False 
+
+def check_taccount_activity(res):
+    subs = res["subscription"] 
+    cred_params = res["credential"]["parameters"]
 
     if subs and datetime.now().date() <= (datetime.strptime(subs["end_date"], "%Y-%m-%d") + timedelta(days=5)).date():
         return True
