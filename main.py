@@ -27,15 +27,15 @@ def send_welcome(message):
 def send_helptext(message):
   chat_id = message.chat.id
   help_text = '''Available Commands:
- <code>/deezer &lt;ARL&gt;</code>  - Check Deezer ARL status
- <code>/gen_arl</code> - To Generate Deezer account's ARL
+ <code>/arl &lt;ARL&gt;</code>  - Check Deezer ARL status
+ <code>/deezer</code> - To Generate Deezer account's ARL
  <code>/qobuz</code> - Fetch Qobuz account/Token details.<br></br>
  <strong>Bot created by @thekvt</strong>'''
 
   bot.send_message(chat_id, text=help_text, parse_mode='HTML')
 
 
-@bot.message_handler(commands=['deezer'])
+@bot.message_handler(commands=['arl'])
 def check_deezer_subscription_command(message):
   chat_id = message.chat.id
   arl = message.text.split()[-1]  # Extract ARL from the command
@@ -43,7 +43,7 @@ def check_deezer_subscription_command(message):
   bot.send_message(chat_id, result,parse_mode='MARKDOWN')
 
 
-@bot.message_handler(commands=['gen_arl'])
+@bot.message_handler(commands=['deezer'])
 def get_deezer_arl(message):
     chat_id = message.chat.id
     print(chat_id)
