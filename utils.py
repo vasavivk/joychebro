@@ -134,7 +134,7 @@ def get_account_details(email, password, app_id):
       plan_label = credential['parameters']['label'] if credential[
         'parameters'] else "Unknown"
       subscription_end_date = res['subscription']['end_date'] if res['subscription'] else 'Unknown'
-      active_subscription = check_account_activity(res)
+      active_subscription = check_taccount_activity(res)
       store_features = res['store_features']
       streaming_enabled = store_features['streaming']
       download_enabled = store_features['download']
