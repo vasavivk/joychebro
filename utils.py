@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 import hashlib
 from random import randint
@@ -33,7 +33,7 @@ def check_deezer_subscription_status(arl):
         'Could not login! Credentials wrong or nonexistent account!')
     country_co = results['COUNTRY']
     planD = results['OFFER_NAME']
-    expireD = 'Unknown'
+    expireD = results['USER']['TRY_AND_BUY']['DATE_END']
     ActiveD = True
     DLD = True
     LosslessD = results['USER']['OPTIONS']['web_sound_quality']['lossless']
@@ -56,6 +56,16 @@ def check_deezer_subscription_status(arl):
   except ValueError:
     return "Invalid Given ARL or nonexistent account!"
 
+def check_account_activity(res):
+    subs = res["user"]["subscription"]
+    cred_params = res["user"]["credential"]["parameters"]
+
+    if subs and datetime.now().date() <= (datetime.strptime(subs["end_date"], "%Y-%m-%d") + timedelta(days=5)).date():
+        return True
+    elif cred_params and cred_params["hires_streaming"] and cred_params["source"] == "household":
+        return True
+    
+    return False
 
 def get_qobuz_credentials():
   USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
@@ -84,17 +94,15 @@ def get_account_details(email, password, app_id):
     url = f"https://www.qobuz.com/api.json/0.2/user/login?email={email}&password={password}&app_id={app_id}"
     response = requests.get(url, headers={'User-Agent': USER_AGENT})
     res = response.json()
-    if 'status' not in res or 'end_date' and 'credential' in res :
+    if 'status' not in res :
       user = res['user']
       userid = user['id']
       auth_token = res['user_auth_token']
       country_code = user['country_code']
       credential = user['credential']
-      plan_label = credential['parameters']['label'] if credential[
-        'parameters'] else None
+      plan_label = credential['parameters']['label'] if credential['parameters'] else None
       subscription_end_date = user['subscription']['end_date']
-      active_subscription = datetime.now() < datetime.strptime(
-        subscription_end_date, '%Y-%m-%d')
+      active_subscription = check_account_activity(res)
       store_features = user['store_features']
       streaming_enabled = store_features['streaming']
       download_enabled = store_features['download']
@@ -107,16 +115,15 @@ def get_account_details(email, password, app_id):
 
     response = requests.get(url, headers={'User-Agent': USER_AGENT})
     res = response.json()
-    if 'status' not in res or 'end_date' and 'credential' in res :
+    if 'status' not in res :
       userid = email
       auth_token = password
       country_code = res['country_code']
       credential = res['credential']
       plan_label = credential['parameters']['label'] if credential[
-        'parameters'] else None
-      subscription_end_date = res['subscription']['end_date']
-      active_subscription = datetime.now() < datetime.strptime(
-        subscription_end_date, '%Y-%m-%d')
+        'parameters'] else "Unknown"
+      subscription_end_date = res['subscription']['end_date'] if res['subscription']['end_date'] else 'Unknown'
+      active_subscription = check_account_activity(res)
       store_features = res['store_features']
       streaming_enabled = store_features['streaming']
       download_enabled = store_features['download']
@@ -217,34 +224,3 @@ def arl_via_email(email, password):
     session.get('https://api.deezer.com/platform/generic/track/80085',
                 headers=headers)
     return genarl(session)["results"]
-
-def try2link_bypass(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    url = url.rstrip('/')  # Remove trailing slash if present
-
-    params = {'d': int(time.time()) + (60 * 4)}
-    r = client.get(url, params=params, headers={'Referer': 'https://newforex.online/'})
-
-    soup = BeautifulSoup(r.text, 'html.parser')
-    inputs = soup.find(id="go-link").find_all('input')
-    data = {input.get('name'): input.get('value') for input in inputs}
-    time.sleep(7)
-
-    headers = {'Host': 'try2link.com', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://try2link.com',
-               'Referer': url}
-
-    bypassed_url = client.post('https://try2link.com/links/go', headers=headers, data=data)
-    return bypassed_url.json()["url"]
-
-
-def try2link_scrape(url, chat_id, message_id):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    headers = {
-        'upgrade-insecure-requests': '1',
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/105.0.0.0 Safari/537.36',
-    }
-    res = client.get(url, cookies={}, headers=headers)
-    url = 'https://try2link.com/' + re.findall('try2link\.com\/(.*?) ', res.text)[0]
-    bypassed_url = try2link_bypass(url)
-    bot.send_message(chat_id, f"Bypassed URL:\n {bypassed_url}")
